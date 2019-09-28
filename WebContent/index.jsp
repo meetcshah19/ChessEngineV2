@@ -64,9 +64,7 @@ function signin(){
 						<input class="input100" type="text" name="password" placeholder="*************">
 						<span class="focus-input100"></span>
 					</div>
-
-					
-
+					<%=request.getAttribute("error1")==null?"":request.getAttribute("error1") %>
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>

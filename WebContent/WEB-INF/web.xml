@@ -18,13 +18,14 @@
 	<url-pattern>/Engine</url-pattern>
 	</servlet-mapping>
 	<servlet>
-		<servlet-name>Login</servlet-name>
-		<servlet-class>com.controller.Login</servlet-class>
+		<servlet-name>SaveGame</servlet-name>
+		<servlet-class>com.controller.SaveGame</servlet-class>
 	</servlet>
 	<servlet-mapping>
-	<servlet-name>Login</servlet-name>
-	<url-pattern>/Login</url-pattern>
+	<servlet-name>SaveGame</servlet-name>
+	<url-pattern>/SaveGame</url-pattern>
 	</servlet-mapping>
+	
 	<servlet>
 		<servlet-name>Register</servlet-name>
 		<servlet-class>com.controller.Register</servlet-class>
@@ -32,6 +33,14 @@
 	<servlet-mapping>
 	<servlet-name>Register</servlet-name>
 	<url-pattern>/Register</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>Login</servlet-name>
+		<servlet-class>com.controller.Login</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	<servlet-name>Login</servlet-name>
+	<url-pattern>/Login</url-pattern>
 	</servlet-mapping>
 	
 </web-app>

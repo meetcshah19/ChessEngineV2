@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Chess Engine</title>
-<style>
+	<title>Welcome: Home Page</title>
+	<style>
 		@import
 			url(https://)fonts.googleapis.com/css?
 			family=Exo:100,200,400);
@@ -24,7 +23,7 @@
 		}
 		.myBoard
 		{
-			margin-left: 400px;
+			margin-left: 500px;
 		}
 		.button
 		{
@@ -42,7 +41,7 @@
 		}
 		.button1
 		{
-			margin: 20px 230px 20px 220px;
+			margin: 20px 230px 20px 330px;
 
 		}
 		.button2
@@ -50,36 +49,19 @@
 			margin: 20px 50px;
 		}
 	</style>
-
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="js/chessboard-1.0.0.js"></script>
-<script src="js/chess.js"></script>
-<link rel="stylesheet" href="css/chessboard-1.0.0.css">
-
-</head>
+	 <link rel="stylesheet" href="css/chessboard-1.0.0.css"></link>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/chessboard-1.0.0.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.2/chess.js"></script>
 <body>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<h1> WELCOME <%=request.getSession().getAttribute("username")%> </h1>
+	<h1> WELCOME USER_NAME </h1>
 	<table>
 		<tr>
 			<td>
-			<pre>                                                .</pre>
+			<pre>                                                              .</pre>
 			</td>
 			<td>
-	<div id="myBoard" style="width: 550px" ></div>
+	<div id="myBoard" style="width: 750px" ></div>
 	</td></tr></table>
 	<br><br>
 	<table>
@@ -91,40 +73,13 @@
 	<button type="button" class="button button2" onclick="window.location.href='chessboardindex.html'">Analysis</button>
 </td>
 </tr>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
 	<script>
 		var board = null
 		var $board = $('#myBoard')
@@ -177,7 +132,6 @@
 
 		function onDrop(source, target) {
 			// see if the move is legal
-			
 			var move = game.move({
 				from : source,
 				to : target,
@@ -194,23 +148,8 @@
 			$board.find('.square-' + target).addClass('highlight-white')
 
 			// make random move for black
-			if(game.in_checkmate()){
-				var pgn = game.pgn()
-				console.log("57165761");
-				console.log(pgn);
-				var xmlhttp=new XMLHttpRequest();
-				xmlhttp.open("GET", "http://localhost:8080/ChessEngine/SaveGame?pgn="+pgn,true);
-				xmlhttp.send();
-
-			}
-
-			else if(game.in_draw() | game.in_stalemate() | game.in_threefold_repetition()){
-				var pgn = game.pgn()
-			}
-
-			else{
 			window.setTimeout(makeRandomMove, 250)
-		    }		}
+		}
 
 		function onMoveEnd() {
 			$board.find('.square-' + squareToHighlight).addClass(
@@ -281,32 +220,9 @@
 			{
 			    if (xmlhttp.readyState==4 && xmlhttp.status==200)
 			    {
-			         if(xmlhttp.responseText.split(".").length == 2 && xmlhttp.responseText.split(".")[0] == 'mate'){
-				         	//user is mated
-				         	console.log(xmlhttp.responseText.split(".")[1]);
-				         	board.move(xmlhttp.responseText.split(".")[1]);
-				            game.move(xmlhttp.responseText.split(".")[1], {sloppy: true});
-				         	var pgn = game.pgn()
-				        	xmlhttp=new XMLHttpRequest();
-							xmlhttp.open("GET", "http://localhost:8080/ChessEngine/SaveGame?pgn="+pgn,true);
-							xmlhttp.send();
-
-				         }
-				         else if(xmlhttp.responseText.split(".").length == 2 && xmlhttp.responseText.split(".")[0] == 'draw'){
-				         	//engine plays move to draw
-				         	board.move(xmlhttp.responseText.split(".")[1]);
-				            game.move(xmlhttp.responseText.split(".")[1], {sloppy: true});
-				         	var pgn = chess.pgn()
-				        	xmlhttp=new XMLHttpRequest();
-							xmlhttp.open("GET", "http://localhost:8080/ChessEngine/SaveGame?pgn="+pgn,true);
-							xmlhttp.send();
-
-				         }
-				         else{
-				        	 console.log(xmlhttp.responseText);
-				         board.move(xmlhttp.responseText);
-				         game.move(xmlhttp.responseText, {sloppy: true});
-					    }
+			         
+			         board.move(xmlhttp.responseText);
+			         game.move(xmlhttp.responseText, {sloppy: true});
 			    }
 			}; 
 			
@@ -320,6 +236,7 @@
 
 		board = Chessboard('myBoard', config)
 	</script>
-	
+
+
 </body>
 </html>

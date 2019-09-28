@@ -75,6 +75,8 @@ public class Login extends HttpServlet {
 				request.getRequestDispatcher("index.jsp").forward(request, response);
 			} else {
 				request.getSession().setAttribute("uid", uid);
+				request.getSession().setAttribute("username", UserName);
+				
 				request.getSession().setAttribute("conn", conn);
 				
 				request.getSession().setAttribute("Loggedin", true);

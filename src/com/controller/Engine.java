@@ -22,7 +22,7 @@ public class Engine extends HttpServlet {
 	static Move bestmove;
 	static int d = 4;
 	private static final long serialVersionUID = 1L;
-	static int counter =0;
+	static int counter = 0;
 	static ArrayList<Double> alphabeta;
 	static {
 		alphabeta = new ArrayList<Double>();
@@ -46,19 +46,29 @@ public class Engine extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String fen = (String) request.getParameter("fen");
-		fen = "r1bqkb1r/pppp1ppp/2n2n2/4p1N1/2B1P3/8/PPPP1PPP/RNBQK2R b KQkq -";
 		Board board = new Board();
 		board.loadFromFen(fen);
 		boolean isMax = board.getSideToMove() == Enum.valueOf(Side.class, "WHITE") ? true : false;
 		try {
 			System.out.println(Minimax(d, board, isMax));
 			System.out.println(bestmove);
+			board.doMove(bestmove);
+			if (board.isMated()) {
+				response.getWriter().append(
+						"mate." + (bestmove.toString().substring(0, 2) + "-" + bestmove.toString().substring(2)));
+			} else if (board.isDraw()) {
+				response.getWriter().append(
+						"draw." + (bestmove.toString().substring(0, 2) + "-" + bestmove.toString().substring(2)));
+			} else {
+				response.getWriter()
+						.append(bestmove.toString().substring(0, 2) + "-" + bestmove.toString().substring(2));
+			}
 		} catch (MoveGeneratorException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		System.out.println(alphabeta);
 
-		response.getWriter().append(bestmove.toString().substring(0, 2) + "-" + bestmove.toString().substring(2));
 	}
 
 	static double Minimax(int depth, Board board, boolean isMax) throws MoveGeneratorException {
@@ -71,27 +81,30 @@ public class Engine extends HttpServlet {
 			if (isMax) {
 //				first element is alpha
 				double score;
-				minmax_score = -1000000;
+				minmax_score = -100000000;
 				MoveList moves = MoveGenerator.generateLegalMoves(board);
-				System.out.println(counter++ +"----"+depth);
+				System.out.println(counter++ + "----" + depth);
 
 				for (Move move : moves) {
-					if (!checkCut(depth, isMax)) {
-						board.doMove(move);
+					if (move != null) {
+						if (!checkCut(depth, isMax)) {
+							board.doMove(move);
 
-						score = Evaluate(board);
-						if (alphabeta.get(0) == null) {
-							alphabeta.add(0, score);
-						} else if (alphabeta.get(0) < score) {
-							alphabeta.remove(0);
-							alphabeta.add(0, score);
+							score = Evaluate(board);
+							if (alphabeta.get(0) == null) {
+								alphabeta.remove(0);
+								alphabeta.add(0, score);
+							} else if (alphabeta.get(0) < score) {
+								alphabeta.remove(0);
+								alphabeta.add(0, score);
+							}
+							board.undoMove();
+							if (score > minmax_score) {
+								minmax_score = score;
+							}
+						} else {
+							break;
 						}
-						board.undoMove();
-						if (score > minmax_score) {
-							minmax_score = score;
-						}
-					} else {
-						break;
 					}
 				}
 			} else {
@@ -99,24 +112,27 @@ public class Engine extends HttpServlet {
 				double score;
 				minmax_score = +1000000;
 				MoveList moves = MoveGenerator.generateLegalMoves(board);
-				System.out.println(counter++ +"----"+depth);
+				System.out.println(counter++ + "----" + depth);
 				for (Move move : moves) {
-					if (!checkCut(depth, isMax)) {
-						board.doMove(move);
+					if (move != null) {
+						if (!checkCut(depth, isMax)) {
+							board.doMove(move);
 
-						score = Evaluate(board);
-						if (alphabeta.get(0) == null) {
-							alphabeta.add(0, score);
-						} else if (alphabeta.get(0) > score) {
-							alphabeta.remove(0);
-							alphabeta.add(score);
+							score = Evaluate(board);
+							if (alphabeta.get(0) == null) {
+								alphabeta.remove(0);
+								alphabeta.add(0, score);
+							} else if (alphabeta.get(0) > score) {
+								alphabeta.remove(0);
+								alphabeta.add(score);
+							}
+							if (score < minmax_score) {
+								minmax_score = score;
+							}
+							board.undoMove();
+						} else {
+							break;
 						}
-						if (score < minmax_score) {
-							minmax_score = score;
-						}
-						board.undoMove();
-					} else {
-						break;
 					}
 				}
 			}
@@ -127,58 +143,62 @@ public class Engine extends HttpServlet {
 			// call minimax on all moves with int depth = depth - 1
 			if (isMax) {
 				double score;
-				minmax_score = -100000;
+				minmax_score = -10000000;
 				MoveList moves = MoveGenerator.generateLegalMoves(board);
-				System.out.println(counter++ +"----"+depth);
+				System.out.println(counter++ + "----" + depth);
 				for (Move move : moves) {
 					if (!checkCut(depth, isMax)) {
-						board.doMove(move);
-						score = Minimax(depth - 1, board, !isMax);
-						if (alphabeta.get(depth - 1) == null) {
-							alphabeta.add(score);
-						} else if (alphabeta.get(depth - 1) < score) {
-							alphabeta.remove(depth - 1);
-							alphabeta.add(depth - 1, score);
-						}
-
-						if (score > minmax_score) {
-							minmax_score = score;
-							if (d == depth) {
-								bestmove = move;
+						if (move != null) {
+							board.doMove(move);
+							score = Minimax(depth - 1, board, !isMax);
+							if (alphabeta.get(depth - 1) == null) {
+								alphabeta.remove(depth - 1);
+								alphabeta.add(depth - 1, score);
+							} else if (alphabeta.get(depth - 1) < score) {
+								alphabeta.remove(depth - 1);
+								alphabeta.add(depth - 1, score);
 							}
+
+							if (score > minmax_score) {
+								minmax_score = score;
+								if (d == depth) {
+									bestmove = move;
+								}
+							}
+							board.undoMove();
+						} else {
+							break;
 						}
-						board.undoMove();
-					}
-					else {
-						break;
 					}
 				}
 			} else {
 				minmax_score = 1000000;
 				MoveList moves = MoveGenerator.generateLegalMoves(board);
-				System.out.println(counter++ +"----"+depth);
+				System.out.println(counter++ + "----" + depth);
 				double score;
 				for (Move move : moves) {
-					if (!checkCut(depth, isMax)) {
-						board.doMove(move);
-						score = Minimax(depth - 1, board, !isMax);
-						if (alphabeta.get(depth - 1) == null) {
-							alphabeta.add(score);
-						} else if (alphabeta.get(depth - 1) > score) {
-							alphabeta.remove(depth - 1);
-							alphabeta.add(depth - 1, score);
-						}
-
-						if (score < minmax_score) {
-							minmax_score = score;
-							if (d == depth) {
-								bestmove = move;
+					if (move != null) {
+						if (!checkCut(depth, isMax)) {
+							board.doMove(move);
+							score = Minimax(depth - 1, board, !isMax);
+							if (alphabeta.get(depth - 1) == null) {
+								alphabeta.remove(depth - 1);
+								alphabeta.add(depth - 1, score);
+							} else if (alphabeta.get(depth - 1) > score) {
+								alphabeta.remove(depth - 1);
+								alphabeta.add(depth - 1, score);
 							}
+
+							if (score < minmax_score) {
+								minmax_score = score;
+								if (d == depth) {
+									bestmove = move;
+								}
+							}
+							board.undoMove();
+						} else {
+							break;
 						}
-						board.undoMove();
-					}
-					else {
-						break;
 					}
 				}
 			}

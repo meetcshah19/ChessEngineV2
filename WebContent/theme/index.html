@@ -1,131 +1,88 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Chess Engine</title>
-<style>
-		@import
-			url(https://)fonts.googleapis.com/css?
-			family=Exo:100,200,400);
-		body
-		{
-			background-repeat: no-repeat;
-			background-size: cover;
-			background-color: #FFD88B;
-			background-image: url(https://images4.alphacoders.com/804/804089.jpg);
-			opacity: 1;
-		}
-		h1
-		{
-			text-align: center;
-			font-size: 80px;
-			color: #7F7373;
-			font-family: 'Exo', sans-serif;
-		}
-		.myBoard
-		{
-			margin-left: 400px;
-		}
-		.button
-		{
-			border: none;
-			padding: 15px 150px;
-			border-radius: 25px;
-			background-color: red;
-			align-self: center;
-			font-size: 20px;
-			color: white
-			text-align: center;
-			display: inline-block;
-			cursor: pointer;
-
-		}
-		.button1
-		{
-			margin: 20px 230px 20px 220px;
-
-		}
-		.button2
-		{
-			margin: 20px 50px;
-		}
-	</style>
-
-<script
+<html lang="en">
+  <head>
+  <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="js/chessboard-1.0.0.js"></script>
-<script src="js/chess.js"></script>
-<link rel="stylesheet" href="css/chessboard-1.0.0.css">
+<script src="assets/js/chessboard-1.0.0.js"></script>
+<script src="assets/js/chess.js"></script>
+<link rel="stylesheet" href="assets/css/chessboard-1.0.0.css">
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="assets/img/favicon.png">
 
-</head>
-<body>
+    <title>FLATTY - Free Bootstrap 3 Landing Page</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="assets/css/main.css" rel="stylesheet">
+
+    <!-- Fonts from Google Fonts -->
+	<link href='http://fonts.googleapis.com/css?family=Lato:300,400,900' rel='stylesheet' type='text/css'>
+    
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          
+          <a class="navbar-brand" href="#" style="font-size:40px;color:black;'"><b>Welcome UserName</b></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+   
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+	<div id="headerwrap">
+	<div id="myBoard" style="width: 550px;;margin-left:450px;" ></div>
+	<h1 align="center" id="move">E2-E4</h1>
+
+	<br>
+	<br>
+	<br>
 	
+	</div><!-- /headerwrap -->
 	
+		<div class="container">
+		<hr>
+		<div class="row centered">
+			<div class="col-lg-6 col-lg-offset-3">
+				<form class="form-inline" role="form">
+				  <button class="btn btn-warning btn-lg" onclick="callServletwithAjax()">Evaluate</button>
+				  <button  class="btn btn-warning btn-lg">Previous Game</button>
+				  <button  class="btn btn-warning btn-lg">-></button>
+				  <button  class="btn btn-warning btn-lg"> <- </button>
+				</form>					
+			</div>
+			<div class="col-lg-3"></div>
+		</div><!-- /row -->
+		<hr>
+		
+	</div><!-- /container -->
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<h1> WELCOME <%=request.getSession().getAttribute("username")%> </h1>
-	<table>
-		<tr>
-			<td>
-			<pre>                                                .</pre>
-			</td>
-			<td>
-	<div id="myBoard" style="width: 550px" ></div>
-	</td></tr></table>
-	<br><br>
-	<table>
-		<tr>
-			<td>
-	<button type="button" class="button button1" onclick="window.location.href='chessboardindex.html'" >Resign</button>
-</td>
-<td>
-	<button type="button" class="button button2" onclick="window.location.href='chessboardindex.html'">Analysis</button>
-</td>
-</tr>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<script>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script>
 		var board = null
 		var $board = $('#myBoard')
 		var game = new Chess()
@@ -265,16 +222,6 @@
 			$square.css('background', background)
 		}
 
-		var config = {
-			draggable : true,
-			position : 'start',
-			onDragStart : onDragStart,
-			onDrop : onDrop,
-			onMouseoutSquare : onMouseoutSquare,
-			onMouseoverSquare : onMouseoverSquare,
-			onMoveEnd : onMoveEnd,
-			onSnapEnd : onSnapEnd
-		}
 		function callServletwithAjax(){
 			var xmlhttp=new XMLHttpRequest();
 			xmlhttp.onreadystatechange=function()
@@ -318,8 +265,39 @@
 						
 		}
 
+		game.load_pgn('1. e4 Nc6 2. d4 e5');
+		var config = {
+			draggable : true,
+			position : game.fen(),
+			onDragStart : onDragStart,
+			onDrop : onDrop,
+			onMouseoutSquare : onMouseoutSquare,
+			onMouseoverSquare : onMouseoverSquare,
+			onMoveEnd : onMoveEnd,
+			onSnapEnd : onSnapEnd
+		}
+		function callServletwithAjax(){
+			console.log('in');
+			var xmlhttp=new XMLHttpRequest();
+			xmlhttp.onreadystatechange=function()
+			{
+				getElementById("move").innerHTML=xmlhttp.responseText;
+			}; 
+			
+			
+			
+			var params="fen="+game.fen();
+			xmlhttp.open("GET", "http://localhost:8080/ChessEngine/Engine?"+params,true);
+			xmlhttp.send();
+						
+		}
+		
+		
+		
+		
+		
+		
 		board = Chessboard('myBoard', config)
 	</script>
-	
-</body>
+  </body>
 </html>
