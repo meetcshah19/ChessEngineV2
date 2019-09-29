@@ -196,7 +196,7 @@
 				console.log("57165761");
 				console.log(pgn);
 				var xmlhttp=new XMLHttpRequest();
-				xmlhttp.open("GET", "http://localhost:8080/ChessEngine/SaveGame?pgn="+pgn,true);
+				xmlhttp.open("GET", "http://chessengine.app.sdslabs.tech/ChessEngine/SaveGame?pgn="+pgn,true);
 				xmlhttp.send();
 
 			}
@@ -285,7 +285,7 @@
 				            game.move(xmlhttp.responseText.split(".")[1], {sloppy: true});
 				         	var pgn = game.pgn()
 				        	xmlhttp=new XMLHttpRequest();
-							xmlhttp.open("GET", "http://localhost:8080/ChessEngine/SaveGame?pgn="+pgn,true);
+							xmlhttp.open("GET", "http://chessengine.app.sdslabs.tech/ChessEngine/SaveGame?pgn="+pgn,true);
 							xmlhttp.send();
 
 				         }
@@ -295,7 +295,7 @@
 				            game.move(xmlhttp.responseText.split(".")[1], {sloppy: true});
 				         	var pgn = chess.pgn()
 				        	xmlhttp=new XMLHttpRequest();
-							xmlhttp.open("GET", "http://localhost:8080/ChessEngine/SaveGame?pgn="+pgn,true);
+							xmlhttp.open("GET", "http://chessengine.app.sdslabs.tech/ChessEngine/SaveGame?pgn="+pgn,true);
 							xmlhttp.send();
 
 				         }
@@ -310,7 +310,7 @@
 			
 			
 			var params="fen="+game.fen();
-			xmlhttp.open("GET", "http://localhost:8080/ChessEngine/Engine?"+params,true);
+			xmlhttp.open("GET", "http://chessengine.app.sdslabs.tech/ChessEngine/Engine?"+params,true);
 			xmlhttp.send();
 						
 		}

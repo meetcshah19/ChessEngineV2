@@ -86,7 +86,7 @@ public class Login extends HttpServlet {
 				request.getSession().setAttribute("conn", conn);
 				
 				request.getSession().setAttribute("Loggedin", true);
-				request.getRequestDispatcher("home.jsp").forward(request, response);
+				response.sendRedirect("home.jsp");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
