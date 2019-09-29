@@ -12,7 +12,7 @@
 			background-repeat: no-repeat;
 			background-size: cover;
 			background-color: #FFD88B;
-			background-image: url(https://images4.alphacoders.com/804/804089.jpg);
+			background-image: url(https://previews.123rf.com/images/1stchoice/1stchoice1506/1stchoice150600018/41591970-white-grey-background-in-soft-grunge-style-concrete-texture.jpg);
 			opacity: 1;
 		}
 		h1
@@ -31,7 +31,7 @@
 			border: none;
 			padding: 15px 150px;
 			border-radius: 25px;
-			background-color: red;
+			background-color: blue;
 			align-self: center;
 			font-size: 20px;
 			color: white
@@ -47,7 +47,7 @@
 		}
 		.button2
 		{
-			margin: 20px 50px;
+			margin: 20px 666px;
 		}
 	</style>
 
@@ -84,11 +84,8 @@
 	<br><br>
 	<table>
 		<tr>
-			<td>
-	<button type="button" class="button button1" onclick="window.location.href='chessboardindex.html'" >Resign</button>
-</td>
 <td>
-	<button type="button" class="button button2" onclick="window.location.href='chessboardindex.html'">Analysis</button>
+	<button type="button" class="button button2" onclick="window.location.href='theme/analysis.jsp'">Analysis</button>
 </td>
 </tr>
 	

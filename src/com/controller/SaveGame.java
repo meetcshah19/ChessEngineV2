@@ -36,6 +36,7 @@ public class SaveGame extends HttpServlet {
 	try {
 		createStatement = conn.createStatement();
 		 createStatement.execute("insert into game (uid,pgn) values("+cid.toString()+",'"+pgn+"');");
+		 request.getSession().setAttribute("pgn", pgn);
 		System.out.println(executeQuery);
 	} catch (SQLException e1) {
 		// TODO Auto-generated catch block

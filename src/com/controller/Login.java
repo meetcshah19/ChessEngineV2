@@ -74,6 +74,12 @@ public class Login extends HttpServlet {
 							"Wrong Username/Password");
 				request.getRequestDispatcher("index.jsp").forward(request, response);
 			} else {
+				ResultSet a=createStatement.executeQuery("select pgn from game where uid="+uid+";");
+				a.setFetchDirection(ResultSet.FETCH_REVERSE);
+				a.next();				
+				System.out.println(a.getString("pgn"));
+				
+				request.getSession().setAttribute("pgn", a.getString("pgn"));
 				request.getSession().setAttribute("uid", uid);
 				request.getSession().setAttribute("username", UserName);
 				

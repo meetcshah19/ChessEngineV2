@@ -263,7 +263,7 @@
 						
 		}
 		var n=0;
-		game.load_pgn('1. e4 Nc6 2. Ke2 Nd4  3. Kd3 e5 4. Kc4 d6 5. Kd5 Be6');
+		game.load_pgn('<%=request.getSession().getAttribute("pgn")%>');
 		var config = {
 			draggable : true,
 			position : game.fen(),

@@ -44,7 +44,7 @@ function signin(){
 	
 	<div class="limiter">
 		<div class="container-login100">
-			<div class="login100-more" style="background-image: url('images/bg-01.jpg');"></div>
+			<div class="login100-more" style="background-image: url('https://thumbs-prod.si-cdn.com/6t32wu2xSTOHZ72y9nAVJBVpcy8=/800x600/filters:no_upscale():focal(4290x2860:4291x2861)/https://public-media.si-cdn.com/filer/64/73/6473f6c7-4e17-40a2-a612-826f0084f709/m5af7m.jpg');"></div>
 
 			<div class="wrap-login100 p-l-50 p-r-50 p-t-72 p-b-50">
 				
@@ -61,7 +61,7 @@ function signin(){
 					
 					<div class="wrap-input100 validate-input" data-validate = "Password is required">
 						<span class="label-input100">Password</span>
-						<input class="input100" type="text" name="password" placeholder="*************">
+						<input class="input100" type="password" name="password" placeholder="*************">
 						<span class="focus-input100"></span>
 					</div>
 					<%=request.getAttribute("error1")==null?"":request.getAttribute("error1") %>

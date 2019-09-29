@@ -103,7 +103,7 @@ public class Engine extends HttpServlet {
 							if (alphabeta.get(0) == null) {
 								alphabeta.remove(0);
 								alphabeta.add(0, score);
-							} else if (alphabeta.get(0) < score) {
+							} else if (alphabeta.get(0) <= score) {
 								alphabeta.remove(0);
 								alphabeta.add(0, score);
 							}
@@ -131,7 +131,7 @@ public class Engine extends HttpServlet {
 							if (alphabeta.get(0) == null) {
 								alphabeta.remove(0);
 								alphabeta.add(0, score);
-							} else if (alphabeta.get(0) > score) {
+							} else if (alphabeta.get(0) >= score) {
 								alphabeta.remove(0);
 								alphabeta.add(score);
 							}
