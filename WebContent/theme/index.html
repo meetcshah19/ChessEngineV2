@@ -63,12 +63,10 @@
 		<hr>
 		<div class="row centered">
 			<div class="col-lg-6 col-lg-offset-3">
-				<form class="form-inline" role="form">
 				  <button class="btn btn-warning btn-lg" onclick="callServletwithAjax()">Evaluate</button>
 				  <button  class="btn btn-warning btn-lg">Previous Game</button>
-				  <button  class="btn btn-warning btn-lg">-></button>
-				  <button  class="btn btn-warning btn-lg"> <- </button>
-				</form>					
+				  <button  class="btn btn-warning btn-lg" onclick = "backwardarrow()"> <- </button>
+				  <button  class="btn btn-warning btn-lg" onclick="forwardarrow()">-></button>
 			</div>
 			<div class="col-lg-3"></div>
 		</div><!-- /row -->
@@ -264,8 +262,8 @@
 			xmlhttp.send();
 						
 		}
-
-		game.load_pgn('1. e4 Nc6 2. d4 e5');
+		var n=0;
+		game.load_pgn('1. e4 Nc6 2. Ke2 Nd4  3. Kd3 e5 4. Kc4 d6 5. Kd5 Be6');
 		var config = {
 			draggable : true,
 			position : game.fen(),
@@ -276,20 +274,47 @@
 			onMoveEnd : onMoveEnd,
 			onSnapEnd : onSnapEnd
 		}
+		board = Chessboard('myBoard', config)
+		var movearray = game.history()
+		game = new Chess();
+		board.position(game.fen())
+		console.log(movearray)
+		function forwardarrow(){
+			console.log('in')
+			if(n < movearray.length){
+			n++;
+			console.log(n);
+			game.move(movearray[n-1]);
+			board.position(game.fen());
+			}
+		}	
+		
+		function backwardarrow(){
+			if(n != 0){
+			n--;
+			game.undo();
+			board.position(game.fen());
+		    }
+		}
+		
+		
+		
 		function callServletwithAjax(){
+			if(n%2==0){
 			console.log('in');
 			var xmlhttp=new XMLHttpRequest();
 			xmlhttp.onreadystatechange=function()
 			{
-				getElementById("move").innerHTML=xmlhttp.responseText;
+				document.getElementById("move").innerHTML=xmlhttp.responseText;
 			}; 
 			
 			
-			
-			var params="fen="+game.fen();
+			var params="fen="+game.fen()+"?";
 			xmlhttp.open("GET", "http://localhost:8080/ChessEngine/Engine?"+params,true);
 			xmlhttp.send();
-						
+			}else{
+				document.getElementById("move").innerHTML=movearray[n];
+			}
 		}
 		
 		
@@ -297,7 +322,6 @@
 		
 		
 		
-		board = Chessboard('myBoard', config)
 	</script>
   </body>
 </html>

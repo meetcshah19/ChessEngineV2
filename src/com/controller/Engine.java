@@ -46,6 +46,12 @@ public class Engine extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String fen = (String) request.getParameter("fen");
+		boolean flag=false;
+		if(fen.charAt(fen.length()-1)=='?') {
+			d--;
+			fen=new String(fen.substring(0, fen.length()-1));
+			flag=true;
+		}
 		Board board = new Board();
 		board.loadFromFen(fen);
 		boolean isMax = board.getSideToMove() == Enum.valueOf(Side.class, "WHITE") ? true : false;
@@ -62,6 +68,9 @@ public class Engine extends HttpServlet {
 			} else {
 				response.getWriter()
 						.append(bestmove.toString().substring(0, 2) + "-" + bestmove.toString().substring(2));
+			}
+			if(flag) {
+				d++;
 			}
 		} catch (MoveGeneratorException e) {
 			// TODO Auto-generated catch block
