@@ -258,12 +258,12 @@
 			
 			
 			var params="fen="+game.fen();
-			xmlhttp.open("GET", "http://chessengine.app.sdslabs.tech/ChessEngine/Engine?"+params,true);
+			xmlhttp.open("GET", "http://localhost:8080/ChessEngine/Engine?"+params,true);
 			xmlhttp.send();
 						
 		}
 		var n=0;
-		game.load_pgn('<%=request.getSession().getAttribute("pgn")%>');
+		game.load_pgn(' 1. e4 Nc6 2. Ke2 Nd4  3. Kd3 e5 4. Kc4 d6 5. Kd5 Be6');
 		var config = {
 			draggable : true,
 			position : game.fen(),
